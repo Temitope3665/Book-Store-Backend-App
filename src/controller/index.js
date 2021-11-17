@@ -1,4 +1,4 @@
-const { createUser, getUser, validatePassword, addBookHere } = require("../services")
+const { createUser, getUser, validatePassword, addBookHere, updateBookByAdmin, getBooksByUser } = require("../services")
 
 
 const registerUser = async(req, res, next) => {
@@ -54,8 +54,41 @@ const addBook = async(req, res, next) => {
     }
 }
 
+const updateBook = async(req, res, next) => {
+    try {
+        const { body, params: {id}} = req
+        const newBook = await updateBookByAdmin(body, id)
+
+        res.status(201).json({
+            status: 'success',
+            message: `Books has been updated successfully by the admin`,
+            data: newBook
+        })
+
+    } catch (error) {
+        return next(error)
+    }
+}
+
+const getBooks = async(req, res, next) => {
+    try {
+        const { id } = req
+        const allBooks = await getBooksByUser(id)
+
+        res.status(200).json({
+            status: 'success',
+            message: 'All books fetched successfully by user',
+            data: allBooks
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
-    addBook
+    addBook,
+    updateBook,
+    getBooks
 }

@@ -24,6 +24,17 @@ const queries = {
             author
         ) VALUES ($1, $2, $3)
         RETURNING *
+    `,
+    updateBook: `
+        UPDATE books
+        SET
+            title = $1,
+            author = $2
+        WHERE book_details_id=$3
+        RETURNING *
+    `,
+    getAllBooks: `
+    SELECT * FROM books
     `
 }
 

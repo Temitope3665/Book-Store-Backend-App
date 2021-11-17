@@ -27,8 +27,17 @@ const addBookSchema = {
     message: 'Error while adding book by admin'
 }
 
+const updateBookSchema = {
+    schema: Joi.object().keys({
+        title: Joi.string().required(),
+        author: Joi.string().required(),
+    }),
+    message: 'Error while updating book by admin'
+}
+
 module.exports = {
     createUserSchema,
     loginUserSchema,
-    addBookSchema
+    addBookSchema,
+    updateBookSchema
 }

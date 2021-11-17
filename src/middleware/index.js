@@ -65,7 +65,7 @@ const validateUser = (data, type) => async (req, res, next) => {
 const verifyToken = (type, role) => async(req, res, next) => {
     try {
         let token
-        if (type === 'logged-in' && role === 'admin') {
+        if (type === 'logged-in' && role === 'admin' || role === 'user') {
             token = req.headers['x-access-token']
         } else {
             token = req.query.token
@@ -75,9 +75,9 @@ const verifyToken = (type, role) => async(req, res, next) => {
             return res.status(403).json({
                 status: 'fail',
                 message: 'No token provided.'
-            })
+        })
 
-        const tokenValidated = await validateToken(token, type, role)
+        const tokenValidated = await validateToken(token, type)
         if(tokenValidated.message) {
             return res.status(403).json({
                 status: 'fail',
@@ -85,13 +85,15 @@ const verifyToken = (type, role) => async(req, res, next) => {
             })
         }        
         const { userRole, email, id } = tokenValidated
+        console.log(tokenValidated)
 
-        if (userRole !== 'admin') {
+        if (userRole !== 'admin' && role === 'admin') {
             return res.status(403).json({
                 status: 'fail',
                 message: 'Not authorized to add book. Only admin can.'
             })
         }
+        
         const [ user ] = await getUser(email)
 
         if (!user) {

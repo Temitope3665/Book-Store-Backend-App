@@ -17,8 +17,18 @@ const addBookHere = async(body, id) => {
     return db.one(queries.addNewBook, payload)
 }
 
+// updateBook
+const updateBookByAdmin = async(data, id) => {
+    // const { title, author } = body
+    const payload = [ data.title, data.author, id ]
+    return db.any(queries.updateBook, payload)
+}
+
 // get user
 const getUser = email => db.any(queries.getUser, email)
+
+// get all books
+const getBooksByUser = async(id) => db.many(queries.getAllBooks, id)
 
 // Validate password
 const validatePassword = async(user, password) => {
@@ -34,5 +44,7 @@ module.exports = {
     createUser,
     getUser,
     validatePassword,
-    addBookHere
+    addBookHere,
+    updateBookByAdmin,
+    getBooksByUser
 }

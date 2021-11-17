@@ -26,9 +26,9 @@ const generateToken = async user => {
 }
 
 // validate token
-const validateToken = async (token, type, role) => {
+const validateToken = async (token, type) => {
     try {
-        return jwt.verify(token, type === 'logged-in' && role === 'admin' ? process.env.TOKEN_KEY: process.env.RESET_TOKEN_KEY)
+        return jwt.verify(token, type === 'logged-in' ? process.env.TOKEN_KEY: process.env.RESET_TOKEN_KEY)
     } catch (error) {
         return error
     }
