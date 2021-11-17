@@ -1,5 +1,5 @@
 const express = require('express')
-const { registerUser, loginUser, addBook, updateBook, getBooks, addBookToCatalogue, getCatalogueBooks } = require('../controller')
+const { registerUser, loginUser, addBook, updateBook, getBooks, addBookToCatalogue, getCatalogueBooks, deleteCatalogueBook } = require('../controller')
 const { getAllBooks } = require('../db/queries')
 const { checkUser, validateUser, verifyToken } = require('../middleware')
 const { createUserSchema, loginUserSchema, addBookSchema, updateBookSchema, addBookToCatalogueSchema } = require('../validation')
@@ -52,4 +52,9 @@ router.get(
     getCatalogueBooks
 )
 
+router.delete(
+    '/delete-catalogue-books',
+    verifyToken('logged-in', 'user'),
+    deleteCatalogueBook
+)
 module.exports = router

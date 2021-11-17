@@ -38,6 +38,8 @@ const getBooksByUser = async(id) => db.many(queries.getAllBooks, id)
 
 const getAllBooksInCatalogue = async(id) => db.many(queries.getBookFromCatalogue, id)
 
+const deleteBooksFromCatalogue = async(id) => db.none(queries.deleteCatalogueBooks, id)
+
 // Validate password
 const validatePassword = async(user, password) => {
     const isValid = await comparePassword(password, user.password)
@@ -56,5 +58,6 @@ module.exports = {
     updateBookByAdmin,
     getBooksByUser,
     addBookIntoCatalogue,
-    getAllBooksInCatalogue
+    getAllBooksInCatalogue,
+    deleteBooksFromCatalogue
 }

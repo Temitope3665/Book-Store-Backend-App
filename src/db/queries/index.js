@@ -46,6 +46,10 @@ const queries = {
     `,
     getBookFromCatalogue: `
         SELECT * FROM userbooks
+    `,
+    deleteCatalogueBooks: `
+    DELETE FROM userbooks
+    WHERE id = $1
     `
 }
 

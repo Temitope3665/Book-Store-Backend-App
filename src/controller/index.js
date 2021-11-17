@@ -107,8 +107,23 @@ const getCatalogueBooks = async(req, res, next) => {
 
         res.status(200).json({
             status: 'success',
-            message: 'All books fetched successfully by user',
+            message: 'All books in the catalogue fetched successfully by user',
             data: allCatalogueBooks
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
+const deleteCatalogueBook = async(req, res, next) => {
+    try {
+        const { id } = req
+        const deleteBook = await deleteByUser(id)
+        
+        res.status(200).json({
+            status: "Success",
+            message: `Catalogue books deleted successfully`,
+            data: deleteBook
         })
     } catch (error) {
         return next(error)
@@ -122,5 +137,6 @@ module.exports = {
     updateBook,
     getBooks,
     addBookToCatalogue,
-    getCatalogueBooks
+    getCatalogueBooks,
+    deleteCatalogueBook
 }
