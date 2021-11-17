@@ -1,4 +1,4 @@
-const { createUser, getUser, validatePassword, addBookHere, updateBookByAdmin, getBooksByUser, addBookIntoCatalogue, getBooksInCatalogue, getAllBooksInCatalogue } = require("../services")
+const { createUser, getUser, validatePassword, addBookHere, updateBookByAdmin, getBooksByUser, addBookIntoCatalogue, getBooksInCatalogue, getAllBooksInCatalogue, deleteBooksFromCatalogue } = require("../services")
 
 
 const registerUser = async(req, res, next) => {
@@ -117,8 +117,8 @@ const getCatalogueBooks = async(req, res, next) => {
 
 const deleteCatalogueBook = async(req, res, next) => {
     try {
-        const { id } = req
-        const deleteBook = await deleteByUser(id)
+        const { body, params: {id}} = req
+        const deleteBook = await deleteBooksFromCatalogue(body, id)
         
         res.status(200).json({
             status: "Success",
