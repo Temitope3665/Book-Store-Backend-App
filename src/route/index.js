@@ -1,7 +1,7 @@
 const express = require('express')
 const { registerUser, loginUser, addBook, updateBook, getBooks, addBookToCatalogue, getCatalogueBooks, deleteCatalogueBook } = require('../controller')
 const { getAllBooks } = require('../db/queries')
-const { checkUser, validateUser, verifyToken } = require('../middleware')
+const { checkUser, validateUser, verifyToken, verifyBookId } = require('../middleware')
 const { createUserSchema, loginUserSchema, addBookSchema, updateBookSchema, addBookToCatalogueSchema } = require('../validation')
 const router = express.Router()
 
@@ -30,6 +30,7 @@ router.put(
     '/update-book/:id',
     verifyToken('logged-in', 'admin'),
     validateUser(updateBookSchema, 'body'),
+    verifyBookId,
     updateBook
 )
 
@@ -53,7 +54,7 @@ router.get(
 )
 
 router.delete(
-    '/delete-catalogue-books',
+    '/delete-catalogue-books/:id',
     verifyToken('logged-in', 'user'),
     deleteCatalogueBook
 )

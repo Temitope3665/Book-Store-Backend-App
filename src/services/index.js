@@ -24,9 +24,12 @@ const addBookIntoCatalogue = async(body, id) => {
 }
 
 // updateBook
-const updateBookByAdmin = async(data, id) => {
-    // const { title, author } = body
-    const payload = [ data.title, data.author, id ]
+const updateBookByAdmin = async(newData, oldData) => {
+    const payload = [ 
+        newData.title || oldData.title,
+        newData.author || oldData.author,
+        oldData.book_details_id
+     ]
     return db.any(queries.updateBook, payload)
 }
 
@@ -41,6 +44,9 @@ const getAllBooksInCatalogue = async(id) => db.many(queries.getBookFromCatalogue
 const deleteBooksFromCatalogue = async(id) => {
     return db.none(queries.deleteCatalogueBooks, id)
 }
+
+// get book based on id
+const getBooksById = async(id) => db.oneOrNone(queries.getBooksById, id)
 
 // Validate password
 const validatePassword = async(user, password) => {
@@ -61,5 +67,6 @@ module.exports = {
     getBooksByUser,
     addBookIntoCatalogue,
     getAllBooksInCatalogue,
-    deleteBooksFromCatalogue
+    deleteBooksFromCatalogue,
+    getBooksById
 }

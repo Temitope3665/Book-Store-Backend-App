@@ -29,8 +29,8 @@ const addBookSchema = {
 
 const updateBookSchema = {
     schema: Joi.object().keys({
-        title: Joi.string().required(),
-        author: Joi.string().required(),
+        title: Joi.string(),
+        author: Joi.string(),
     }),
     message: 'Error while updating book by admin'
 }

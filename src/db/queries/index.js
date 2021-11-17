@@ -50,6 +50,10 @@ const queries = {
     deleteCatalogueBooks: `
     DELETE FROM userbooks
     WHERE id = $1
+    `,
+    getBooksById: ` 
+        SELECT * FROM books
+        WHERE book_details_id=$1
     `
 }
 

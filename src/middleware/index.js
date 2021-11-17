@@ -1,4 +1,4 @@
-const { getUser } = require("../services")
+const { getUser, getBooksById } = require("../services")
 const { validateToken } = require("../utils")
 
 
@@ -22,6 +22,7 @@ const checkUser = (type) => async(req, res, next) => {
         if (user) {
             return res.status(400).json({
                 status: 'fail',
+                code: 400,
                 message: 'User already exists. Log in',
                 data: []
             })
@@ -85,7 +86,6 @@ const verifyToken = (type, role) => async(req, res, next) => {
             })
         }        
         const { userRole, email, id } = tokenValidated
-        console.log(tokenValidated)
 
         if (userRole !== 'admin' && role === 'admin') {
             return res.status(403).json({
@@ -113,8 +113,28 @@ const verifyToken = (type, role) => async(req, res, next) => {
     }
 }
 
+const verifyBookId = async(req, res, next) => {
+    try {
+        const { params : { id }} = req
+        const book = await getBooksById(id)
+// validate if book exist
+        if (book) {
+            req.book = book
+            return next()
+        }
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Book not found'
+        })
+
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     checkUser,
     validateUser,
-    verifyToken
+    verifyToken, 
+    verifyBookId
 }

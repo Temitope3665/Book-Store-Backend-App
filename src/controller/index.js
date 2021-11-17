@@ -9,6 +9,7 @@ const registerUser = async(req, res, next) => {
 
         res.status(201).json({
             status: 'success',
+            code: 201,
             message: `User created successfully`,
             data: user
         })
@@ -71,8 +72,8 @@ const addBookToCatalogue = async(req, res, next) => {
 
 const updateBook = async(req, res, next) => {
     try {
-        const { body, params: {id}} = req
-        const newBook = await updateBookByAdmin(body, id)
+        const { body, book } = req
+        const newBook = await updateBookByAdmin(body, book)
 
         res.status(201).json({
             status: 'success',
