@@ -43,6 +43,9 @@ const queries = {
         author
     ) VALUES ($1, $2, $3)
     RETURNING *
+    `,
+    getBookFromCatalogue: `
+        SELECT * FROM userbooks
     `
 }
 

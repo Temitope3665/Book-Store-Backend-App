@@ -36,6 +36,8 @@ const getUser = email => db.any(queries.getUser, email)
 // get all books
 const getBooksByUser = async(id) => db.many(queries.getAllBooks, id)
 
+const getAllBooksInCatalogue = async(id) => db.many(queries.getBookFromCatalogue, id)
+
 // Validate password
 const validatePassword = async(user, password) => {
     const isValid = await comparePassword(password, user.password)
@@ -53,5 +55,6 @@ module.exports = {
     addBookHere,
     updateBookByAdmin,
     getBooksByUser,
-    addBookIntoCatalogue
+    addBookIntoCatalogue,
+    getAllBooksInCatalogue
 }
