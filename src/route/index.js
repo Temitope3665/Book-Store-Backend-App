@@ -1,8 +1,8 @@
 const express = require('express')
-const { registerUser, loginUser, addBook, updateBook, getBooks } = require('../controller')
+const { registerUser, loginUser, addBook, updateBook, getBooks, addBookToCatalogue } = require('../controller')
 const { getAllBooks } = require('../db/queries')
 const { checkUser, validateUser, verifyToken } = require('../middleware')
-const { createUserSchema, loginUserSchema, addBookSchema, updateBookSchema } = require('../validation')
+const { createUserSchema, loginUserSchema, addBookSchema, updateBookSchema, addBookToCatalogueSchema } = require('../validation')
 const router = express.Router()
 
 router.post(
@@ -37,6 +37,13 @@ router.get(
     '/get-all-books',
     verifyToken('logged-in', 'user'),
     getBooks
+)
+
+router.post(
+    `/add-books-to-catalogue`,
+    verifyToken('logged-in', 'user'),
+    validateUser(addBookToCatalogueSchema, 'body'),
+    addBookToCatalogue
 )
 
 module.exports = router

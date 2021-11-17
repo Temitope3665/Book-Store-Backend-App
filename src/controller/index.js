@@ -1,4 +1,4 @@
-const { createUser, getUser, validatePassword, addBookHere, updateBookByAdmin, getBooksByUser } = require("../services")
+const { createUser, getUser, validatePassword, addBookHere, updateBookByAdmin, getBooksByUser, addBookIntoCatalogue } = require("../services")
 
 
 const registerUser = async(req, res, next) => {
@@ -54,6 +54,21 @@ const addBook = async(req, res, next) => {
     }
 }
 
+const addBookToCatalogue = async(req, res, next) => {
+    try {
+        const { body, id } = req
+        const catalogueBook = await addBookIntoCatalogue(body, id)
+
+        res.status(201).json({
+            status: 'success',
+            message: `Books has been added successfully by the admin`,
+            data: catalogueBook
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
 const updateBook = async(req, res, next) => {
     try {
         const { body, params: {id}} = req
@@ -90,5 +105,6 @@ module.exports = {
     loginUser,
     addBook,
     updateBook,
-    getBooks
+    getBooks,
+    addBookToCatalogue
 }

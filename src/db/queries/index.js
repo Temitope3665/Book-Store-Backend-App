@@ -35,6 +35,14 @@ const queries = {
     `,
     getAllBooks: `
     SELECT * FROM books
+    `,
+    addNewBookToUserCatalogue: `
+    INSERT INTO userbooks (
+        user_book_id,
+        title,
+        author
+    ) VALUES ($1, $2, $3)
+    RETURNING *
     `
 }
 

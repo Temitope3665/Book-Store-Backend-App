@@ -17,6 +17,12 @@ const addBookHere = async(body, id) => {
     return db.one(queries.addNewBook, payload)
 }
 
+const addBookIntoCatalogue = async(body, id) => {
+    const { title, author } = body
+    const payload = [ id, title, author ]
+    return db.one(queries.addNewBookToUserCatalogue, payload)
+}
+
 // updateBook
 const updateBookByAdmin = async(data, id) => {
     // const { title, author } = body
@@ -46,5 +52,6 @@ module.exports = {
     validatePassword,
     addBookHere,
     updateBookByAdmin,
-    getBooksByUser
+    getBooksByUser,
+    addBookIntoCatalogue
 }
