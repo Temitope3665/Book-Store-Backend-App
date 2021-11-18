@@ -75,6 +75,7 @@ const verifyToken = (type, role) => async(req, res, next) => {
         if (!token)
             return res.status(403).json({
                 status: 'fail',
+                code: 403,
                 message: 'No token provided.'
         })
 

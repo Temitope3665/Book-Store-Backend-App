@@ -48,6 +48,7 @@ const addBook = async(req, res, next) => {
 
         res.status(201).json({
             status: 'success',
+            code: 201,
             message: `Books has been added successfully by the admin`,
             data: book
         })
