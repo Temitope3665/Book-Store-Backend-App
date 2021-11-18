@@ -2,7 +2,9 @@ const {expect} = require('chai')
 const request = require('supertest')
 const app = require('../src/index')
 
-let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImVtYWlsIjoiamltQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoiYWRtaW4iLCJpYXQiOjE2MzcyMjMwOTEsImV4cCI6MTYzNzIzMDI5MX0.XM1XRMzMXtu4HlpXqt542wvzjo62rVVBa-tiOSJnctE`
+let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImVtYWlsIjoibHlubkBnbWFpbC5jb20iLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNjM3MjY4MDExLCJleHAiOjE2MzcyNzUyMTF9.Hzu4Sk4WeTB-7xaxEl4JZITxV6yxXKnrSObdVBIb3tc`
+
+let bookId = ''
 
 describe('book', () => {
     it('baseroute', (done) => {
@@ -20,14 +22,15 @@ describe('book', () => {
     //     request(app)
     //     .post('/register-user')
     //     .send({
-    //         firstName: 'Jim',
-    //         lastName: 'Myke',
+    //         firstName: 'Rowland',
+    //         lastName: 'Lynn',
     //         role: 'admin',
-    //         email: 'jim@gmail.com',
+    //         email: 'lynn@gmail.com',
     //         password: 'password'
     //     })
     //     .expect(201)
     //     .end((err, res) => {
+    //         bookId = res.body.data.id
     //         expect(res.body.message).to.equal('User created successfully')
     //         expect(res.body.code).to.equal(201)
     //         expect(res.body.status).to.equal('success')
@@ -45,7 +48,7 @@ describe('book', () => {
         request(app)
         .post('/login-user')
         .send({
-            email: 'jim@gmail.com',
+            email: 'lynn@gmail.com',
             password: 'password'
         })
         .expect(201)
@@ -65,17 +68,33 @@ describe('book', () => {
         .post('/add-book')
         .set('x-access-token', token)
         .send({
-            title: 'The Conjuring',
+            title: 'The Devils Gate',
             author: 'Horrors',
         })
         .expect(201)
         .end((err, res) => {
-            console.log(res.body)
+            //console.log(res.body.book_details_id)
+            bookId = res.body.data.book_details_id
             expect(res.body.message).to.equal('Books has been added successfully by the admin')
             expect(res.body.code).to.equal(201)
             expect(res.body.status).to.equal('success')
-            // expect(res.body.data).to.be.an('object')
-            // expect(res.body.data).to.have.property('token')
+            done()
+        })
+    })
+
+    it('updateBook', (done) => {
+        request(app)
+        .put(`/update-book/${bookId}`)
+        .set('x-access-token', token)
+        .expect(201)
+        .end((err, res) => {
+            console.log(res.body)
+            expect(res.body.message).to.equal('Books has been updated successfully by the admin')
+            expect(res.body.code).to.equal(201)
+            expect(res.body.status).to.equal('success')
+            expect(res.body.data).to.be.an('array')
+            expect(res.body.data[0]).to.have.property('title')
+            expect(res.body.data[0]).to.have.property('author')
             done()
         })
     })

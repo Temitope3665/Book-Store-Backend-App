@@ -79,6 +79,7 @@ const updateBook = async(req, res, next) => {
 
         res.status(201).json({
             status: 'success',
+            code: 201,
             message: `Books has been updated successfully by the admin`,
             data: newBook
         })
