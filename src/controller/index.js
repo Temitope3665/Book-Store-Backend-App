@@ -31,6 +31,7 @@ const loginUser = async(req, res, next) => {
         } else {
             res.status(201).json({
                 status: 'success',
+                code: 201,
                 message: 'User logged in successfully',
                 data: validated
             })
