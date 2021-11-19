@@ -41,9 +41,7 @@ const getBooksByUser = async(id) => db.many(queries.getAllBooks, id)
 
 const getAllBooksInCatalogue = async(id) => db.many(queries.getBookFromCatalogue, id)
 
-const deleteBooksFromCatalogue = async(id) => {
-    return db.none(queries.deleteCatalogueBooks, id)
-}
+const deleteBooksFromCatalogue = async(id) => db.none(queries.deleteCatalogueBooks, id)
 
 // get book based on id
 const getBooksById = async(id) => db.oneOrNone(queries.getBooksById, id)
