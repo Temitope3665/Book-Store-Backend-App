@@ -49,7 +49,7 @@ const queries = {
     `,
     deleteCatalogueBooks: `
     DELETE FROM userbooks
-    WHERE book_details_id = $1
+    WHERE user_book_details_id=$1
     RETURNING *
     `,
     getBooksById: ` 

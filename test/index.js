@@ -2,7 +2,7 @@ const {expect} = require('chai')
 const request = require('supertest')
 const app = require('../src/index')
 
-let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoicGFjQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoidXNlciIsImlhdCI6MTYzNzI4MjA4NCwiZXhwIjoxNjM3Mjg5Mjg0fQ.rHSeS_16nkuPYWHgREmwUFcGoCmW1yF46xSUj_6-lXo`
+let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoicGFjQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoidXNlciIsImlhdCI6MTYzNzMwOTIzNywiZXhwIjoxNjM3MzE2NDM3fQ.GEjrhYwx-_nneQvb5HoCHlfU2hwdZahxiMR4bpt-ZjU`
 
 let bookId = ''
 
@@ -123,6 +123,7 @@ describe('book', () => {
         .expect(201)
         .end((err, res) => {
             bookId = res.body.data.user_book_details_id
+            console.log('book id', bookId)
             expect(res.body.message).to.equal('Books has been added successfully by the user')
             expect(res.body.code).to.equal(201)
             expect(res.body.status).to.equal('success')
@@ -152,10 +153,11 @@ describe('book', () => {
 
     it('delete books in catalogue', (done) => {
         request(app)
-        .delete(`/delete-catalogue-books/${bookId}`)
+        .delete(`/delete-catalogue-books/24`)
         .set('x-access-token', token)
         .expect(200)
         .end((err, res) => {
+            // console.log('BOOK ID', res.body.data.user_book_details_id)
             expect(res.body.message).to.equal('Catalogue books deleted successfully')
             expect(res.body.code).to.equal(200)
             expect(res.body.status).to.equal('success')

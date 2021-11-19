@@ -125,13 +125,13 @@ const getCatalogueBooks = async(req, res, next) => {
 const deleteCatalogueBook = async(req, res, next) => {
     try {
         const { params: {id}} = req
-        const deleteBook = await deleteBooksFromCatalogue(id)
+        await deleteBooksFromCatalogue(id)
         
         res.status(200).json({
             status: "success",
             code: 200,
             message: `Catalogue books deleted successfully`,
-            data: deleteBook
+            // data:
         })
     } catch (error) {
         return next(error)
